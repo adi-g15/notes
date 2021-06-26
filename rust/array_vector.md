@@ -55,3 +55,14 @@ Resizable arrays
 // .iter
 // .iter_mut
 ```
+
+### .map() alternative
+
+**Just iterate with a mutable iterator**
+
+```rs
+for x in numbers.iter_mut() {
+	*x *= 2;
+}
+```
+
