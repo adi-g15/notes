@@ -7,20 +7,20 @@ The file is included at end
 ## Observations
 
 In `services:`, there are these tp (transaction processors):
-* settings-tp (sawtooth-settings-tp:chime)
+* settings-tp (sawtooth-settings-tp)
   > settings-tp -vv -C tcp://validator:4004
-* intkey-tp (sawtooth-intkey-tp-python:chime)
+* intkey-tp (sawtooth-intkey-tp-python)
   > intkey-tp-python -vv -C tcp://validator:4004
-* xo-tp (sawtooth-xo-tp-python:chime)
+* xo-tp (sawtooth-xo-tp-python)
   > xo-tp-python -vv -C tcp://validator:4004
 
 Apart from these, there are:
-* validator (sawtooth-validator:chime)
-* devmode-engine (sawtooth-devmode-engine-rust:chime)
+* validator (sawtooth-validator)
+* devmode-engine (sawtooth-devmode-engine-rust)
   > devmode-engine-rust -C tcp://validator:5050
-* rest-api (sawtooth-rest-api:chime)
+* rest-api (sawtooth-rest-api)
   > sawtooth-rest-api -C tcp://validator:4004 --bind rest-api:8008
-* shell (sawtooth-shell:chime)
+* shell (sawtooth-shell)
   > sawtooth keygen && tail -f /dev/null
 
 > Smart one by shell btw :tears-of-joy:... following output of /dev/null to have the 'infinite wait', similar to while(true), but not CPU intensive... i think so... smart move sawtooth ! Saw some interesting usage by it
@@ -58,6 +58,12 @@ The sawtooth-validator command has these args
 * component -> tcp://eth0:4004
 * network -> tcp://eth0:8800
 * consensus -> tcp://eth0:5050
+
+#### Other Observations
+The sawset genesis command just writes a config-genesis.batch file
+
+The `sawset proposal create` also specifies the consesus algorithm -> Devmode version 0.1
+
 
 ### devmode engine
 
