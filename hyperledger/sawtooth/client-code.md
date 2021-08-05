@@ -75,8 +75,9 @@ void AppClient::set(string var_name, int val) {
         .expect("Error generating random nonce");
     header.set_nonce(to_hex_string(nonce)); // this `to_hex_string` is simple, just search "convert bytes to hex string" online
 
-    auto input_vec = ["1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7"];
-    auto output_vec  = ["1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7"];
+    string address = get_address(var_name); // get address of the asset to add/edit/get
+    auto input_vec = [address];
+    auto output_vec  = [address];
 
     header.set_inputs(RepeatedField::from_vec(input_vec));
     header.set_outputs(RepeatedField::from_vec(output_vec));
