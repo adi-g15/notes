@@ -90,3 +90,8 @@ The start method calls start on already initialised objects, in the following or
 6. Completer.set_on_batch_received(journal.submit_batch)
 7. ... wait till killed (signal.signal(SIGTERM) .wait())
 
+> {consensus,component,network}_service are all objects of the `Interconnect` class (from `validator.networking.interconnect`)
+
+I think the network service handles the requests to :5050 that the rest_api seemingly sends
+
+
