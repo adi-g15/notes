@@ -97,3 +97,5 @@ The methods of the internal `Service` trait isn't available on either of rust or
 
 Finally all those initialize_block, finalize_block are requests with Protobuf serialised payloads sent to the network
 
+On validator side, the register request is likely acted upon by `ConsensusRegisterHandler::handle_request`, and actually received by 
+

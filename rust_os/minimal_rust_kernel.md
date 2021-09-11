@@ -59,5 +59,53 @@ A Problem Now:
 Floating point operations on 'x86_64' require SIMD registers by default.
 To solve this, we added 'soft-float' feature, which emulates FP operations through software functions based on normal integers.
 
+## Multiboot standard
 
+Created to avoid each OS having it's own bootloader which works for that single OS only. Very simple to make your kernel be bootable by any Multiboot standard bootloader, as you just have to add a Multiboot header at the beginning of your kernel file.
 
+Some cons:
+* Support only 32-bit, kernel still has to do the jump to 64-bit
+* Designed to make bootloader simpler, rather than kernel... provides many architecture dependent structure to the kernel with no clean interface (I don't know how much true are these)
+* Sparsly documented
+* GRUB needs to be installed on host system to create bootable image from kernel file, making it difficult for Windows and Mac
+
+### Back to rust kernel
+
+Since using a custom target, we need to build rust core library too, for that, add to `.cargo/config.toml`:
+```toml
+[unstable]
+build-std = ["core","compiler_builtins"]
+```
+
+BUT... it still doesn't enable **Memory Related intrinsics**, like memcpy, memcmp, memset functions. So add this:
+```toml
+[unstable]
+build-std-features = ["compiler-builtins-mem"]
+```
+
+Setting default target in `.cargo/config.toml`
+```
+[build]
+target = "x86_64-blog_os.json"
+```
+
+Now, it will build fine... i want to run it... so we need to **compile bootloader, this kernel and link them** (all bootimage does).
+
+Use `bootimage` tool for this, add `bootloader` crate as dependency, and
+
+```sh
+cargo install bootimage
+rustup component add llvm-tools-preview	# required by cargo bootimage
+
+# Build and link
+cargo bootimage
+```
+
+> What bootimage tool does:
+> * compiles kernel to an ELF file
+> * compiles bootloader dependency
+> * links bytes of kernel elf file to bootloader executable
+
+> Then,
+> When booted, the bootloader reads & parses appended ELF file, then maps program segments to virtual addresses in page table, zeroes the .bss section, and sets up a stack.
+> Finally, it reads the entry point (_start) and jumps to it.
