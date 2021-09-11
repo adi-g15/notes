@@ -30,7 +30,7 @@ On the above level, there are these two steps:
   ```
 3. Start your custom engine (**be sure that some consensus is not already running, read [changing engines](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/journal.html#the-consensus-interface) for more info**), the logs should show "Registered transaction processor or something similar"
 
-<div align="center"><img src="registered_ss.png" alt="Screenshot: Engine_registered" /></dev>
+<div align="center"><img src="registered_ss.png" alt="Screenshot: Engine_registered" /></div>
 
 > Note:
 > Here we are considering the [Sawtooth Devmode](github.com/hyperledger/sawtooth-devmode/) consensus engine for reference, you may like to see it's specific logic (should be easy to understand :)
