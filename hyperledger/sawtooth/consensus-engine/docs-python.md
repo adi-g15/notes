@@ -2,7 +2,7 @@
 
 ## Overview
 
-This doc uses the [sawtooth sdk](https://github.com/hyperledger/sawtooth-sdk-rust/) to create a custom consensus engine (basic).
+This doc uses the [sawtooth sdk](https://github.com/hyperledger/sawtooth-sdk-python/) to create a custom consensus engine (basic).
 
 On the above level, there are these two steps:
 1. Code (your consensus Engine)
@@ -30,7 +30,7 @@ On the above level, there are these two steps:
   ```
 3. Start your custom engine (**be sure that some consensus is not already running, read [changing engines](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/journal.html#the-consensus-interface) for more info**), the logs should show "Registered transaction processor or something similar"
 
-<div align="center"><img src="registered_ss.png" alt="Screenshot: Engine_registered" /></dev>
+<div align="center"><img src="registered_ss.png" alt="Screenshot: Engine_registered" /></div>
 
 > Note:
 > Here we are considering the [Sawtooth Devmode](github.com/hyperledger/sawtooth-devmode/) consensus engine for reference, you may like to see it's specific logic (should be easy to understand :)
@@ -38,15 +38,16 @@ On the above level, there are these two steps:
 ## Custom Consensus Engine
 
 Generally we start with these two files (you may do it in more or less, depending on logic):
-1. main.rs
-2. engine.rs
+1. main.py
+2. engine.py
 
-### main.rs
+### main.py
 
 In this you create a ZMQ-based consensus engine driver, like so:
 
 ```rs
-let (driver, _stop) = zmq_driver::ZmqDriver::new();
+from sawtooth_sdk.consensus.zmq_driver import ZmqDriver
+(driver, _stop) = ZmqDriver();
 ```
 
 > `_stop` is a handle for stopping it (you may leave that for now), and it provides a `.stop()` method to do the same
@@ -54,30 +55,25 @@ let (driver, _stop) = zmq_driver::ZmqDriver::new();
 Then, considering you will be naming your Consensus Engine as `CustomEngine`, we register and start the consensus engine by calling .start() on the driver, passing your consensus engine object
 
 ```rs
-match driver.start("tcp://localhost:5050", CustomEngine::new()) {
-        Ok(()) => (),
-        Err(e) => {
-            _stop.stop();
-            panic!("{}",e);
-        }
-    }
+from engine import CustomEngine		# imports from engine.py file
+driver.start("tcp://localhost:5050", CustomEngine());
 ```
 
-> `tcp://localhost:5050` is the endpoint, you may take it as input from user, [see devmode engine main.rs for the same](https://github.com/hyperledger/sawtooth-devmode/blob/814e378ab32fcce9eab39c14b3774774052f521b/src/main.rs#L38-L50)
+> `tcp://localhost:5050` is the endpoint, you may take it as input from user, [see devmode engine main.py for the same](https://github.com/hyperledger/sawtooth-devmode/blob/814e378ab32fcce9eab39c14b3774774052f521b/src/main.py#L38-L50)
 
-That's all for the main.rs file 😃, now we have to implement `CustomEngine` class/struct, let's do that in `engine.rs`
+That's all for the main.py file 😃, now we have to implement `CustomEngine` class/struct, let's do that in `engine.py`
 
 ```rs
 pub struct CustomEngine {}
 
 impl CustomEngine {
-    pub fn new() -> CustomEngine {
+    pub def new() -> CustomEngine {
         CustomEngine {}
     }
 }
 ```
 
-If you try to run the code like this only, it will tell you that **We need to implement sawtooth_sdk::consensus::engine::Engine for each consensus engine**
+If you try to run the code like this only, it will tell you that **We need to implement sawtooth_sdk.consensus.engine.Engine for each consensus engine**
 
 We need to implement four functions:
 1. `start(self,updates,service,startup_state)`: This is the function that generally will go into an infinite 
@@ -86,24 +82,23 @@ We need to implement four functions:
 4. `additional_protocols()`
 
 ```rs
-use sawtooth_sdk::consensus::engine::{Engine,StartupState,Update,Error};
-use sawtooth_sdk::consensus::service::Service;
-use std::sync::mpsc::Receiver;
+from sawtooth_sdk.consensus.engine import Engine,StartupState,Update,Error
+from sawtooth_sdk.consensus.service import Service;
 
 // ...
-
+// TODO: Implementing traits/abstract class in python
 impl Engine for CustomEngine {
     // start() function yet to implement
 
-    fn version(&self) -> String {
+    def version(&self) -> String {
         "0.1".to_string()
     }
 
-    fn name(&self) -> String {
+    def name(&self) -> String {
         "CustomEngine".to_string()
     }
 
-    fn additional_protocols(&self) -> Vec<(String,String)> {
+    def additional_protocols(&self) -> Vec<(String,String)> {
         vec![]
     }
 }
@@ -113,23 +108,17 @@ To get it to **just work**, we return Ok(()) from start function (basically
 nothing):
 
 ```rs
-// impl Engine for CustomEngine {
-    fn start(
-        &mut self,
-        updates: Receiver<Update>,
-        service: Box<dyn Service>,
-        startup_state: StartupState) -> Result<(), Error> {
-
-	Ok(())
-    }
-// ...
+# impl Engine for CustomEngine {
+    def start(self,updates,service,startup_state):
+	return
+# ...
 ```
 
-It isn't enough, though, if you now run it, it will run without any errors, and also show a "Transaction processor registered"
+It isn't enough, though, if you now run it, it will run without any errors, and also show a "Consensus Engine registered"
 
 Adding some logic:
 
-// TODO
+# TODO
 
 ## Internals
 

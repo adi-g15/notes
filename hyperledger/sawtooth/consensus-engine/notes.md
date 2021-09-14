@@ -1,0 +1,1 @@
+../sawtooth-core/validator/core-2.md
