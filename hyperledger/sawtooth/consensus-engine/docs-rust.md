@@ -5,6 +5,8 @@
 This doc uses the [sawtooth sdk](https://github.com/hyperledger/sawtooth-sdk-rust/) to create a custom consensus engine (basic).
 
 > Note: `...` anywhere in code blocks mean that part is covered in earlier section, for eg. instead of writing start(update,service,blah,kya,kuchh) we write start(...) in 2nd and further occurences
+>
+> Note2: **Read the in-code comments too**
 
 On the above level, there are these two steps:
 1. Code (your consensus Engine)
@@ -242,12 +244,38 @@ Now back to implementing other Updates,
 
 	let chain_head = service.get_chain_head().expect("Failed to get chain
 	head");
-    }
+
+	// TODO
+    },
+    Update::BlockCommit(new_chain_head) => {
+	// this is received when the chain head has been updated, so kind of
+	// telling to start working on next block now
+	
+	// All validators are working on a block, so when someone's block has
+	// been done, and made the chain head, we should drop our block, and
+	// start working on a new block, since there maybe new transactions too
+	service.cancel_block().expect("Failed to cancel block");
+	published_at_height = false;
+	service.initialize_block(None).expect("Failed to initialise");
+    },
+    Update::Shutdown => {
+	break;	// to shutdown we just get out of the loop and return
+    },
+    _ => { /*ignore all other Update:: cases for now*/ }
+
+} // here the "match update => {" block ends
 ```
 
-// TODO
+After the outer "match incoming_message {...}" add this:
+```rust
+// TODO: Handle timer expired publish block
+```
 
 ## Internals
 
+TODO
 
+## Changing consensus engine at runtime
+
+TODO
 
