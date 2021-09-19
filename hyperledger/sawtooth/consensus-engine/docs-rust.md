@@ -4,6 +4,8 @@
 
 This doc uses the [sawtooth sdk](https://github.com/hyperledger/sawtooth-sdk-rust/) to create a custom consensus engine (basic).
 
+> Note: `...` anywhere in code blocks mean that part is covered in earlier section, for eg. instead of writing start(update,service,blah,kya,kuchh) we write start(...) in 2nd and further occurences
+
 On the above level, there are these two steps:
 1. Code (your consensus Engine)
 2. Start validator with changed values of `sawtooth.consensus.algorithm.name`, `sawtooth.consensus.algorithm.version` (and other values which are specific to your consensus engine) on-chain settings
@@ -136,7 +138,112 @@ nothing):
 
 It isn't enough, though, if you now run it, it will run without any errors, and also show a "Consensus Engine registered"
 
-Adding some logic:
+### Getting to base minimum logic
+
+Now, we are going to use the arguments we have received. **Inside `start` function**:
+
+```rust
+fn start(
+...
+) -> Result<(), Error> {
+    service.initialize_block(None).expect("Failed to initialize_block");
+
+    loop {	// we do an infinite loop, until we get Shutdown request
+	let incoming_message = updates.recv_timeout(
+				    time::Duration::from_millis(10)
+				    );
+	
+	match incoming_message {
+	    Ok(update) => {
+		// TODO: We will handle update in next step
+	    },
+	    Err(RecvTimeoutError::Disconnected) => {
+		println!("Disconnected from validator");
+		break;	// end the infinte loop
+	    },
+	    Err(RecvTimeoutError::Timeout) => { /*ignoring for this doc*/ }
+	}
+    }
+    
+    Ok(())
+}
+```
+
+### Handling updates
+
+If `incoming_message` (in code in prev section) is Ok, it contains `update`,
+which is one of the following:
+
+* Update::PeerConnected
+* Update::PeerDisconnected
+* Update::PeerMessage
+* Update::BlockNew
+* Update::BlockValid
+* Update::BlockInvalid
+* Update::BlockCommit
+* Update::Shutdown
+
+You can (and should) handle all of them, though for this example, we handle 
+1. **BlockNew** (Received a block, also sent for genesis block)
+2. **BlockValid** (a block has been validated to be correct, here is where we
+   may increase the chain, or create a new fork, or maybe ignore this block)
+3. **BlockCommit** (chain head has been updated, start working on new block)
+4. **PeerMessage** (sending and receiving acknowledgement for blocks, and other messages)
+5. **Shutdown** (shutdown request)
+
+So, **inside the Ok(update) => {} block**, we can add these:
+
+```rust
+... // match statement and everything previous to that
+Ok(update) => {
+    Update::BlockNew(block) => {
+	// 8 bytes with 0 block id means there is no previous block, ie. 
+	// **current block is genesis block**
+	if block.previous_id == [0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8] {
+	    // Check consensus, to check if it passes or fails
+	    if block.payload == create_consensus(block.summary) {
+		// Passed consensus check
+		service.check_block(block.block_id);
+	    } else {
+		// Failed consensus check
+		service.fail_block(block.block_id);
+	    }
+	}
+    }
+    ... others implemented later on
+}
+...
+
+```
+
+> In above code, you see that `create_consensus` function. In this what we do is
+> just _append_ extra bytes to block summary and return it.
+> The extra bytes are specific to your consensus engine, for example, Devmode
+> engine returns block.summary + _bytes(_"Devmode"_)_ 
+>
+> For our custom engine, add this somewhere in engine.rs
+> ```rust
+> fn create_consensus(block_summary: &[u8]) -> Vec<u8> {
+>     let mut consensus: Vec<u8> = Vec::from(&b"CustomDevmode"[..]);
+>     consensus.extend_from_slice(block_summary);	// append block summary
+>     consensus
+> }
+> ```
+
+Now back to implementing other Updates,
+
+```rust
+... implemented till Update::BlockNew
+    Update::BlockValid(block_id) => {
+	// Get block from service, since we will need the complete block to verify
+	let block = service.get_blocks(vec![block_id.clone()]).expect("Failed to
+	get block").remove(&block_id).unwrap();
+	// TODO: Send block received
+
+	let chain_head = service.get_chain_head().expect("Failed to get chain
+	head");
+    }
+```
 
 // TODO
 
