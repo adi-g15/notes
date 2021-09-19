@@ -1,6 +1,6 @@
 ## Consensus Engine
 
-In `validator/sawtooth_validator/core.py` with comment "Consensus Engine", there are these 6 objects:
+In `validator/sawtooth_validator/server/core.py` with comment "Consensus Engine", there are these 6 objects:
 1. consensus_thread_pool
 
   ```py
