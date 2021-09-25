@@ -32,7 +32,7 @@ On the above level, there are these two steps:
           --bind consensus:tcp://eth0:5050 \
         \""
   ```
-3. Start your custom engine (**be sure that some consensus is not already running, read [changing engines](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/journal.html#the-consensus-interface) for more info**), the logs should show "Registered transaction processor or something similar"
+3. Start your custom engine (**be sure that some consensus is not already running, read [changing engines](https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/about_dynamic_consensus.html#changing-consensus-on-a-running-network) for more info**), the logs should show "Registered transaction processor or something similar"
 
 <div align="center"><img src="registered_ss.png" alt="Screenshot: Engine_registered" /></div>
 
