@@ -83,7 +83,7 @@ Instead, parser starts, and as and when it needs the next token, it will ask the
 
 * Checks syntactic (grammatical) correctness
   For eg. each language has a grammar consider if else, for eg it should be
-  > if <condition> then { block } [ else {} ]   // <- else block is optional, but if else is there it must be followed by a block
+  > `if <condition> then { block } [ else {} ]`   // <- else block is optional, but if else is there it must be followed by a block
 
   So we can't write `if then S1 else S2`, because we missed the condition, so parser also checks for these
 
