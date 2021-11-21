@@ -2,7 +2,7 @@
 
 > https://www.youtube.com/watch?v=vv4y_uOneC0
 
-OSI Model Layers:
+OSI Model Layers (Highest to Lowest):
   * Application
   * Presentation
   * Session
