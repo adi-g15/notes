@@ -188,9 +188,10 @@ apbh@8000000 {
 
 ## Interrupt Handling
 
-* `interrupt_controller`: indicates current driver is interrupt controller
-... and others, like 'interrupt-parent'
-* interrupts
+* `interrupt-controller`: indicates current driver is interrupt controller
+* `interrupts`: list of interrupt specifiers
+* `interrupt-parent`: phandle pointing to interrupt-controller of current node
+* `#interrupt-cells`: number of cells in interrupt specifier for this int contr.
 
 # Example Usage
 
@@ -218,4 +219,13 @@ pinctrl subsystem allows to manage pin muxing
   be compatible.
 
 * Subsystems lacking DT bindings: DRM, audio
+
+Ref: https://www.youtube.com/watch?v=u-2gudXTTTQ
+
+> All addressable device use 'reg' property, a list of tuples representing
+> address ranges (address is a 32-bit integer called 'cell'), while length is a
+> list of cells or empty (64-bit addressing need 2 cells for each field)
+>
+> `reg = <addr1 len1 [addr2 len2]...>`
+
 
