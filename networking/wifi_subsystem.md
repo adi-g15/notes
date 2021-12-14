@@ -192,4 +192,19 @@ watch -n1 "cat /proc/net/wireless"
 watch -n1 "cat /proc/net/dev"
 ```
 
+## Flow of packets in an OS
+
+In an OS, it isn't just from Application layer to Physical layer, we only have
+one flow, instead we have two separate flows:
+1. Transimission, reception
+2. control, data
+
+![](data_control-path.png)
+
+For eg. when we write a C program to transfer a file from one to another
+machine, we use system call to create a socket, give the IP, TCP/IP network
+layer, then finally through Net device core the data goes through.
+
+Where is MAC coming into this picture, this is where control path comes
+[See lecture again if wants to know]
 

@@ -4,11 +4,12 @@
 
 OSI Model Layers (Highest to Lowest):
   * Application
-  * Presentation
-  * Session
-  * Transport
-  * Network
-  * Data Link
+  * Presentation -> converts charcters to binary + compress +
+    encryption/decryption
+  * Session -> APIs, authentication + authorisation
+  * Transport -> (UDP,TCP) Dividing/Combining into packets
+  * Network -> (IP) Logical Addressing + Routing
+  * Data Link -> (MAC) Physical Addressing
   * Physical
 
 Each layer is a package of **protocols**, so Application layer doesn't include browser etc apps like Firefox, instead it includes Application Layer Protocols
