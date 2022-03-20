@@ -1,0 +1,68 @@
+digraph "prefix-build" {
+    p_T_reli[label="prefix/TARGET/relibc-install"];
+    prefix -> p_T_reli;
+    relibc[label="/relibc"];
+    p_T_reli -> relibc;
+    p_T_ri[label="prefix/TARGET/rust-install"];
+    p_T_reli -> p_T_ri;
+
+    // Doesn't depend on anyone... downloads from server
+    // p_T_reli_targz[label="prefix/TARGET/relibc-install.tar.gz"];
+    // p_T_reli_targz -> p_T_reli
+
+    // Exclusive to PREFIX_BUILD=1: 
+    // p_T_ri_targz[label="prefix/TARGET/rust-install.tar.gz"];
+    // p_T_ri -> p_T_ri_targz;
+
+    p_T_bu_tarbz2[label="prefix/TARGET/binutils.tar.bz2"];
+    p_T_bui[label="prefix/TARGET/binutils-install"];
+    p_T_bu[label="prefix/TARGET/binutils"];
+
+    p_T_bu -> p_T_bu_tarbz2;
+
+    p_T_bui -> p_T_bu;
+
+    // Independent
+    // p_T_g_tarbz2[label="prefix/TARGET/gcc.tar.bz2"];
+    p_T_gfi[label="prefix/TARGET/gcc-freestanding-install"];
+    p_T_g[label="prefix/TARGET/gcc"];
+
+    // p_T_gfi -> OR2;
+    // OR2 -> p_T_g;
+    // OR2 -> p_T_bui;
+    p_T_gfi -> p_T_g;
+    p_T_gfi -> p_T_bui;
+
+    p_T_rfi[label="prefix/TARGET/rust-freestanding-install"];
+    rust[label="/rust"];
+
+    p_T_rfi -> rust;
+    p_T_rfi -> p_T_bui;
+
+    p_T_relifi[label="prefix/TARGET/relibc-freestanding-install"];
+
+    // p_T_relifi -> OR4
+    // OR4 -> relibc;
+    // OR4 -> p_T_rfi;
+
+    p_T_relifi -> relibc;
+    p_T_relifi -> p_T_rfi;
+
+    p_T_relifi -> p_T_gfi;
+
+    p_T_gi[label="prefix/TARGET/gcc-install"];
+    // p_T_gi -> OR5;
+    // OR5 -> p_T_g;
+    // OR5 -> p_T_relifi;
+
+    p_T_gi -> p_T_g;
+    p_T_gi -> p_T_relifi;
+
+    p_T_gi_targz[label="prefix/TARGET/gcc-install.tar.gz"]
+    p_T_gi_targz -> p_T_gi;
+
+    p_T_ri -> rust;
+    p_T_ri -> p_T_gi;
+
+    p_T_ri -> p_T_relifi;
+}

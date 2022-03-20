@@ -1,0 +1,15 @@
+digraph "prefix" {
+    p_T_reli[label="prefix/TARGET/relibc-install"];
+    prefix -> p_T_reli;
+    relibc[label="/relibc"];
+    p_T_reli -> relibc;
+    p_T_ri[label="prefix/TARGET/rust-install"];
+    p_T_reli -> p_T_ri;
+
+    // Doesn't depend on anyone... downloads from server
+    // p_T_reli_targz[label="prefix/TARGET/relibc-install.tar.gz"];
+    // p_T_reli_targz -> p_T_reli
+
+    p_T_ri_targz[label="prefix/TARGET/rust-install.tar.gz"];
+    p_T_ri -> p_T_ri_targz;
+}

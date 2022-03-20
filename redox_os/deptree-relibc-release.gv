@@ -1,0 +1,44 @@
+digraph "/relibc/Makefile" {
+    all -> libs
+
+    libc_a[label="$BUILD/release/libc.a"]
+    libc_so[label="$BUILD/release/libc.so"]
+    crt0_o[label="$BUILD/release/crt0.o"]
+    crti_o[label="$BUILD/release/crti.o"]
+    crtn_o[label="$BUILD/release/crtn.o"]
+    ld_so[label="$BUILD/release/ld_so"]
+
+    libs -> libc_a
+    libs -> libc_so
+    libs -> crt0_o
+    libs -> crti_o
+    libs -> crtn_o
+    libs -> ld_so
+
+    librelibc_a[label="$BUILD/release/librelibc.a"]
+    libpthread_a[label="$BUILD/pthreads-emb/libpthread.a"]
+    libopenlibm_a[label="$BUILD/pthreads-emb/libopenlibm.a"]
+
+    // TODO: What does $^ and | mean in makefile syntax
+
+    libc_so -> librelibc_a
+    libc_so -> libpthread_a
+    libc_so -> libopenlibm_a
+
+    ld_so_o[label="$BUILD/release/ld_so.o"]
+    ld_so -> ld_so_o
+    ld_so -> crti_o
+    ld_so -> libc_a
+    ld_so -> crtn_o
+
+    b_openlibm[label="$BUILD/openlibm"]
+    b_openlibm -> openlibm
+
+    libopenlibm_a -> b_openlibm librelibc_a
+
+    b_pthreads_emb[label="$BUILD/pthreads-emb"]
+    pthreads_emb[label="pthreads-emb"]
+    b_pthreads_emb -> pthreads_emb
+    libpthread_a -> b_pthreads_emb
+    libpthread_a -> librelibc_a
+}

@@ -1,0 +1,144 @@
+digraph "Targets" {
+    // START - Makefile
+
+    b_hdbin[label="build/harddrive.bin"];
+    b_celf[label="build/coreboot.elf"];
+    b_ldbin[label="build/livedisk.bin"];
+    b_ldiso[label="build/livedisk.iso"];
+    all -> b_hdbin;
+    coreboot -> b_celf;
+    live -> b_ldbin;
+    iso -> b_ldiso;
+
+    clean;
+    distclean -> clean;
+
+    pull;
+    update;
+    fetch;
+
+    // END - Makefile
+
+    // START - mk/prefix.mk
+
+    p_T_reli[label="prefix/TARGET/relibc-install"];
+    prefix -> p_T_reli;
+    relibc[label="/relibc"];
+    p_T_reli -> OR1;
+    OR1 -> relibc;
+    p_T_ri[label="prefix/TARGET/rust-install"];
+    OR1 -> p_T_ri;
+    
+    // Doesn't depend on anyone... downloads from server
+    p_T_reli_targz[label="prefix/TARGET/relibc-install.tar.gz"];
+    p_T_reli_targz -> p_T_reli
+
+    p_T_ri_targz[label="prefix/TARGET/rust-install.tar.gz"];
+    p_T_ri[label="prefix/TARGET/rust-install"];
+    p_T_ri -> p_T_ri_targz;
+
+    // END - mk/prefix.mk
+
+    // START - mk/bootloader.mk
+    b_b_t_bbin[label="bootloader/build/BOOTLOADER_TARGET/bootloader.bin"];
+    b_b_t_bbin -> FORCE;
+    b_bbin[label="build/bootloader.bin"]
+    b_bbin -> b_b_t_bbin;
+
+    b_b_t_blbin[label="bootloader/build/$(BOOTLOADER_TARGET)/bootloader-live.bin"];
+    b_b_t_blbin -> FORCE;
+    b_blbin[label="build/bootloader-live.bin"];
+    b_blbin -> b_b_t_blbin;
+
+    b_b_T_befi[label="bootloader/build/$(EFI_TARGET)/bootloader.efi"];
+    b_b_T_befi -> FORCE;
+    b_befi[label="build/bootloader.efi"];
+    b_befi -> b_b_T_befi;
+
+    b_b_t_blefi[label="bootloader/build/$(EFI_TARGET)/bootloader-live.efi"];
+    b_b_t_blefi -> FORCE;
+    b_blefi[label="build/bootloader-live.efi"];
+    b_blefi -> b_b_t_blefi;
+
+    bc_b_b[label="bootloader-coreboot/build/bootloader"];
+    b_kc[label="build/kernel_coreboot"];
+    bc_b_b -> b_kc;
+    b_cefi[label="build/coreboot.elf"];
+    b_cefi -> bc_b_b;
+
+    // END - mk/bootloader.mk
+
+    // START - mk/kernel.mk
+
+    b_lk[label="build/libkernel.a"];
+    b_lk -> kernel; // Actually it lists out MANY files individually
+    b_itag[label="build/initfs.tag"];
+    b_lk -> b_itag;
+
+    b_k[label="build/kernel"];
+    b_k -> kernel;
+    b_k -> b_lk;
+
+    // END - mk/kernel.mk
+
+    // START - mk/initfs.mk
+
+    b_itag -> prefix;
+    itag_toml[label="initfs.toml"];
+    b_itag -> itag_toml;
+
+    cargo_cookbook[label="Cargo:cookbook"];
+    cargo_installer[label="Cargo:installer"];
+    b_itag -> cargo_cookbook;
+    b_itag -> cargo_installer;
+
+    // END - mk/initfs.mk
+
+    // START - mk/filesystem.mk
+
+    b_fsbin[label="build/filesystem.bin"];
+    fs_toml[label="filesystem.toml"];
+    b_fsbin -> fs_toml;
+    b_fsbin -> b_k;
+    b_fsbin -> prefix;
+    cargo_redoxfs[label="Cargo:redoxfs"];
+    b_fsbin -> cargo_cookbook;
+    b_fsbin -> cargo_installer;
+    b_fsbin -> cargo_redoxfs;
+
+    independents_mk_fs[label="mk/filesystem.mk"];
+
+    mount -> FORCE;
+    mount_extra -> FORCE;
+    umount -> FORCE;
+
+    independents_mk_fs -> mount;
+    independents_mk_fs -> mount_extra;
+    independents_mk_fs -> umount;
+
+    // END - mk/initfs.mk
+
+    // START - mk/disk.mk
+
+    b_hdbin[label="build/harddrive.bin"];
+    b_hdbin -> b_bbin;
+    b_hdbin -> b_fsbin;
+
+    b_ldbin[label="build/livedisk.bin"];
+    b_ldbin -> b_blbin;
+    b_ldbin -> b_fsbin;
+
+    b_ldiso[label="build/livedisk.iso"];
+    b_ldbingz[label="build/livedisk.bin.gz"];
+    b_ldiso -> b_ldbingz;
+
+    b_hdefi[label="build/harddrive-efi.bin"];
+    b_hdefi -> b_befi;
+    b_hdefi -> b_fsbin;
+
+    b_ldefibin[label="build/livedisk-efi.bin"];
+    b_ldefibin -> b_blefi;
+    b_ldefibin -> b_fsbin;
+
+    // END - mk/disk.mk
+}
