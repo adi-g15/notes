@@ -14,15 +14,15 @@ job 3 at 2021-06-20 11:58
 
 > Command gives time to run
 >
-> Then we enter the command specifiying the task to perform
+> Then we enter the command specifying the task to perform
 >
 > To end input, hit Ctrl+D (signals EOF or EOT here)
 
 # cron
 
-`cron` is a time-based sheduling utility program.
+`cron` is a time-based scheduling utility program.
 
-Very easy to shedule tasks, by just editing a `crontab` file; There are both system-wide crontab (`/etc/crontab`) files and user-based ones.
+Very easy to schedule tasks, by just editing a `crontab` file; There are both system-wide crontab (`/etc/crontab`) files and user-based ones.
 
 Typing crontab -e  will open the crontab editor to edit existing jobs or to create new jobs. Each line of the crontab file will contain 6 fields
 

@@ -26,9 +26,9 @@ Every process assigned a PID
 
 Linux kernel implements all threads as standard processes.
 
-## Sheduling
+## Scheduling
 
-> Old sheduling logic: https://web.archive.org/web/20200928200241/https://cs.montana.edu/~chandrima.sarkar/AdvancedOS/CSCI560_Proj_main/index.html
+> Old scheduling logic: https://web.archive.org/web/20200928200241/https://cs.montana.edu/~chandrima.sarkar/AdvancedOS/CSCI560_Proj_main/index.html
 
 > A good view into new code: https://josefbacik.github.io/kernel/scheduler/2017/07/14/scheduler-basics.html
 

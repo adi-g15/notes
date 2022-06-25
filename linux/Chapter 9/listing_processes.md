@@ -11,7 +11,7 @@
 
 # ps (BSD style)
 
-It has another style of option specification, which stems from the BSD variety of UNIX, where, options dont' have preceding dashes.
+It has another style of option specification, which stems from the BSD variety of UNIX, where, options don't have preceding dashes.
 
 ### Options
 
@@ -20,7 +20,7 @@ It has another style of option specification, which stems from the BSD variety o
 
 # pstree -> The Process Tree
 
-This command displayes running processes in form of a tree diagram
+This command displays running processes in form of a tree diagram
 
 # top
 

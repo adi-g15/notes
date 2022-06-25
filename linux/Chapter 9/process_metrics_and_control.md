@@ -35,7 +35,7 @@ In case of multi-core, just divide the numbers you get by number of CPU (cores)
 
 A job here is just a command run from a terminal window.
 
-Foreground jobs -> run directly from shell; when one already running, other jobs need to wait for shell acces (atleast in that terminal window, if using GUI)
+Foreground jobs -> run directly from shell; when one already running, other jobs need to wait for shell access (atleast in that terminal window, if using GUI)
 
 Background -> Add `&` after the command, to run in background, and **free the shell for other tasks**.
 

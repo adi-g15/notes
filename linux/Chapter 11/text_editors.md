@@ -16,7 +16,7 @@ Commands (only those i didn't know well or not at all) ->
 
 * :r file2 -> Read in file2 and insert at current position
 * :w myfile -> Write out to myfile
-* :w! file2 -> Overrite file2
+* :w! file2 -> Overwrite file2
 * :x or :wq
 
 > **Type A to insert text at end of the line (append+turns on insert mode)**
@@ -46,8 +46,8 @@ Commands (only those i didn't know well or not at all) ->
 * `/pattern` -> Search forward for pattern
 * `?pattern` -> Search backward for pattern
 
-* n -> Move to next occurence of search pattern
-* N -> Move to previous occurence of search pattern
+* n -> Move to next occurrence of search pattern
+* N -> Move to previous occurrence of search pattern
 
 ## Working with text in vi
 
@@ -55,7 +55,7 @@ Commands (only those i didn't know well or not at all) ->
 * i -> Insert before cursor
 
 * A -> Append at end of line
-* I -> Insert at beggining of line
+* I -> Insert at beginning of line
 
 * o -> Start a new line below
 * O -> Start a new line above

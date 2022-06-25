@@ -7,5 +7,5 @@
 * Using `ps`, `pstree`, `top`
 * Load average indicates amount of utilization the system is under at particular times
 * Linux supports background & foreground processing for a job
-* Sheduling tasks using `at` and `cron`
+* Scheduling tasks using `at` and `cron`
 

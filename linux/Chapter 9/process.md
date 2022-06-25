@@ -6,7 +6,7 @@ A process is simply an **instance of one or more related task (threads) executin
 
 > NOTE- **It is not the same as a program or a command**, as a single command may actually start several processes simultaneously.
 
-Some processes are independent, some are related to others. So failue of one may or may not affect the other.
+Some processes are independent, some are related to others. So failure of one may or may not affect the other.
 
 ## Resources
 
@@ -25,7 +25,7 @@ We can also run programs in background (**which means they are detached from the
 
 Process Types -
 * Interactive - Need to be started by user (either by command or GUI, eg. Firefox)
-* Batch - Automatic processes which are sheduled from and then disconnected from the terminal (these are queued and work on a **First In First Out** basis, eg. updatedb, ldconfig)
+* Batch - Automatic processes which are scheduled from and then disconnected from the terminal (these are queued and work on a **First In First Out** basis, eg. updatedb, ldconfig)
 * Daemons - Sever processes that run continuously (eg. https, sshd, libvirtd)
 * Threads - Lightweight processes. These are tasks that run under the umbrella of a main process. Many non-trivial programs are multi-threaded (for eg. firefox, gnome-terminal-server)
 * Kernel threads - Users neither start nor terminate, and have little control over these.
@@ -35,7 +35,7 @@ Process Types -
 
 I didn't write part I know, or read many times.
 
-> Sometimes, a child dies, but its parent hasn't asked about its state. Amusingly, such a process is said to be in a zombie state; it isn't really alive, but still shows up in system's list fo processes.
+> Sometimes, a child dies, but its parent hasn't asked about its state. Amusingly, such a process is said to be in a zombie state; it isn't really alive, but still shows up in system's list of processes.
 
 ## Process and Thread ID
 

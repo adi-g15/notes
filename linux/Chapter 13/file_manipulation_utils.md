@@ -25,7 +25,7 @@ then using `paste -d ',' names numbers emails` we can get a new **CSV file** (wi
 
 # join
 
-Like an enhanced version of paste, ignores common column values, and 'joins' the rows (as in SQL tables) accoring to common row value
+Like an enhanced version of paste, ignores common column values, and 'joins' the rows (as in SQL tables) according to common row value
 
 # split
 

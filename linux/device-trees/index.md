@@ -27,7 +27,7 @@ as in x86.
 * Hardware description moves to separate binary, the DTB (device tree blob)
 * Bootloader loads 2 binaries: kernel image and dtb
   * Kernel image: `uImage`/`zImage`
-  * DTB located in arch/arm/boot/dts (Not ony my system, since it's not arm),
+  * DTB located in arch/arm/boot/dts (Not only my system, since it's not arm),
     one per board (?)
 
 * Bootloader now passes DTB address through r2.

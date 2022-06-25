@@ -40,7 +40,7 @@ bash has many built-in commands, which can only be used to display the output wi
 
 Wichever method used, the command will be executed in a newly launched shell environment, and the stdout of the shell is inserted there.
 
-The first way is also prefered now, as it **allows nesting**
+The first way is also preferred now, as it **allows nesting**
 
 ## Exporting environment vars
 

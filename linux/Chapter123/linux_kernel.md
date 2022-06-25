@@ -4,7 +4,7 @@
 
 The bootloader loads both
   * the kernel
-  * and an inital RAM-based file system (initramfs)
+  * and an initial RAM-based file system (initramfs)
 
 so that it can directly be used by the kernel.
 

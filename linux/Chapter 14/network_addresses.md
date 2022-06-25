@@ -17,7 +17,7 @@ These are two different types of IP addresses available.
 
 > However the protocols dont always interoperate well
 
-> One reason IPv4 hasnt disappeared is there are ways to effectively make many more addresses avilable using methods such as **NAT** (Network Address Translation).
+> One reason IPv4 hasn't disappeared is there are ways to effectively make many more addresses available using methods such as **NAT** (Network Address Translation).
 >
 > NAT enables sharing one IP address among many locally connected computers, each of which has a unique address only seen on the local network.
 >

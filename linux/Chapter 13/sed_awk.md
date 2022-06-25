@@ -22,8 +22,8 @@ sed -f scriptfile <file> - Specify a scriptfile containing 'sed' commands
 
 * Replacing string
   ```sh
-  sed s/str1/str2/ file		# Replace first occurence
-  sed s/str1/str2/g file	# Replace all occurences
+  sed s/str1/str2/ file		# Replace first occurrence
+  sed s/str1/str2/g file	# Replace all occurrences
   sed 4,7s/str1/str2/g file	# Replace all in a range (4-7 here)
   ```
 
@@ -33,7 +33,7 @@ sed -f scriptfile <file> - Specify a scriptfile containing 'sed' commands
 > # Check if file2 is okay (maybe with cat or diff)
 > mv file2 file
 
-For multiple operations, just use -e ( Note, it wasnt used in examples since it;s not required for single operation)
+For multiple operations, just use -e ( Note, it wasn't used in examples since it;s not required for single operation)
 
 # awk
 

@@ -3,7 +3,7 @@
 > Chapter 3: The Boot process
 
 Near the end of the boot process, **init** starts a number of text-mode login prompts. These enale you to type your username, followed by your password, and to eventually get a command shell.
-However, if your are running a sustem with graphical interface you will not see these at first.
+However, if your are running a system with graphical interface you will not see these at first.
 
 The terminals which run the command shells can be accessed using the `ALT key` + `a function key`.
 

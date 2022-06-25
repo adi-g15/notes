@@ -21,7 +21,7 @@
 
 SUID (Set owner User ID upon execution - similar to the Windows "run as" feature) is a special kind of file permission given to a file. Use of SUID provides temporary permissions to a user to run a program with the permissions of the file owner (which may be root) instead of the permissions held by the user.
 
-For eg. executing programs such as `passwd` is Runnning SUID-root applications
+For eg. executing programs such as `passwd` is Running SUID-root applications
 
 # sudo
 
@@ -65,7 +65,7 @@ Linux limits user access to **non-networking** hardware devices in similar manne
 > echo "namaste aditya" > /dev/sda
 > ```
 
-# Password ageing and strenth check 
+# Password ageing and strength check 
 
 There are tools like `chage` to remind about old passwords that should be changed.
 
