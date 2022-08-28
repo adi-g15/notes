@@ -5,3 +5,5 @@ Pehle time dekha to lga kahi pdha tha iska full form hota h (not object oriented
 Wikipedia: Linux kernel oops, states it does not stand for anything
 
 They are simply 'deviations' from correct behaviour of the kernel, and some MAY cause kernel panics.
+
+Script to tell more info on a oops stack trace: `/scripts/markup_oops.pl panic_trace.txt`
